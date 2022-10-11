@@ -68,3 +68,16 @@ How we'll use Docker
 Docker on GitHub Actions
     Docker hub introduced rate limit
         100pulls/6h for unauthenticated users
+
+Using Docker Compose
+    Run all commands through Docker Compose
+        - docker-compose run --rm app sh -c "python manage.py collectstatic"
+        - docker-compose Runs a docker compose command
+        run WILL start a specific container defined in config
+        "--rm" removes the container (optional, removes container after it finish running)
+        "app" is the ame of the service
+        "sh -c" passes in a shell command
+
+Stuff:
+    Docker Access token is in secrets
+    
