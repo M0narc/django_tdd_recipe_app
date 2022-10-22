@@ -87,3 +87,10 @@ Stuff:
     is the name of the tag
     alpine is the lightweight version of linux, it's striped of
     everything you don't need
+
+    docker:
+        docker build .
+    docker-compose:
+        docker-compose build
+        docker-compose run --rm app sh -c "flake8"
+        docker-compose run --rm app sh -c "python manage.py test"
