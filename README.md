@@ -80,4 +80,10 @@ Using Docker Compose
 
 Stuff:
     Docker Access token is in secrets
-    
+
+    hub.docker.com has all the base images, for example
+    python, with all the image tags
+    3.9-alpine3.13 
+    is the name of the tag
+    alpine is the lightweight version of linux, it's striped of
+    everything you don't need
