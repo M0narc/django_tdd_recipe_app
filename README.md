@@ -92,5 +92,16 @@ Stuff:
         docker build .
     docker-compose:
         docker-compose build
+        docker-compose up (to create our container)
+        
+    django and compose
         docker-compose run --rm app sh -c "flake8"
         docker-compose run --rm app sh -c "python manage.py test"
+        docker-compose run --rm app sh -c "django-admin startproject app ."
+        the little "." at the end is telling it to create the files
+        inside our alredy created "app" folder, otherwise it will create anotherone and we'll have conflicts.
+        the way it was able to sinc is through the volumen inside our docker-compose.yml
+        everything we create inside our project gets inside our conteiner and everything we create inside our container gets created in our local env
+
+    urls:
+        base > 127.0.0.1:8000
