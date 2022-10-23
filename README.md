@@ -21,6 +21,13 @@ Swagger
 GitHub Actions
     Automation
         Testing and linting
+        Similar to Travis-CI, Jenkins, GitLab CI/CD
+        Run jobs when code changes
+        Automating tasks
+        Common uses:
+            Deployment
+            Code linting
+            Unit test
 
 
 Apps
@@ -92,9 +99,9 @@ Stuff:
         docker build .
     docker-compose:
         docker-compose build
-        docker-compose up (to create our container)
+        docker-compose up (to create our container and get our app up and running)
         
-    django and compose
+    django and compose:
         docker-compose run --rm app sh -c "flake8"
         docker-compose run --rm app sh -c "python manage.py test"
         docker-compose run --rm app sh -c "django-admin startproject app ."
@@ -103,5 +110,13 @@ Stuff:
         the way it was able to sinc is through the volumen inside our docker-compose.yml
         everything we create inside our project gets inside our conteiner and everything we create inside our container gets created in our local env
 
+    GitHub Actions:
+        Trigger > our trigger will be a push to GitHub
+        Job > Run unit tests > Results
+        Create a config file at .github/workflows/checks.yml
+            Set trigger
+            Add steps for running testing and linting
+        Configure Docker hub auth
+        
     urls:
         base > 127.0.0.1:8000
