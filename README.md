@@ -137,6 +137,12 @@ Stuff:
         REWATCH FROM MOCKING PART
     Testing APIs:
         REWATCH TESTING WEB APPS
+
+    DATABASE:
+        PostgreSQL
+            Popular open source DB
+            Integrates well with Django
+            REWATCH
         
     urls:
         base > 127.0.0.1:8000
