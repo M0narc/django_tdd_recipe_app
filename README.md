@@ -117,6 +117,26 @@ Stuff:
             Set trigger
             Add steps for running testing and linting
         Configure Docker hub auth
+
+    Testing:
+        Import test class:
+            SimpleTestCase: No DB
+            TestCase: testing with DB
+        Import obj to test
+        Define Test Class
+        Add test_ method
+        Setup inputs
+        Execute code to be tested
+        Check output
+        To Run:
+            docker-compose run --rm app sh -c "python manage.py test"
+    Mocking:
+        Override or change behaviour of dependencies
+        Avoid unintended side effects
+        Isolate code being tested
+        REWATCH FROM MOCKING PART
+    Testing APIs:
+        REWATCH TESTING WEB APPS
         
     urls:
         base > 127.0.0.1:8000
