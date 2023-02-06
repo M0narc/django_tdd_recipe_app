@@ -90,7 +90,7 @@ Stuff:
 
     hub.docker.com has all the base images, for example
     python, with all the image tags
-    3.9-alpine3.13 
+    3.9-alpine3.13
     is the name of the tag
     alpine is the lightweight version of linux, it's striped of
     everything you don't need
@@ -100,7 +100,8 @@ Stuff:
     docker-compose:
         docker-compose build
         docker-compose up (to create our container and get our app up and running)
-        
+
+
     django and compose:
         docker-compose run --rm app sh -c "flake8"
         docker-compose run --rm app sh -c "python manage.py test"
@@ -110,6 +111,7 @@ Stuff:
         the way it was able to sinc is through the volumen inside our docker-compose.yml
         everything we create inside our project gets inside our conteiner and everything we create inside our container gets created in our local env
 
+
     GitHub Actions:
         Trigger > our trigger will be a push to GitHub
         Job > Run unit tests > Results
@@ -117,6 +119,7 @@ Stuff:
             Set trigger
             Add steps for running testing and linting
         Configure Docker hub auth
+
 
     Testing:
         Import test class:
@@ -138,11 +141,113 @@ Stuff:
     Testing APIs:
         REWATCH TESTING WEB APPS
 
+
     DATABASE:
         PostgreSQL
             Popular open source DB
             Integrates well with Django
-            REWATCH
-        
+            It's supported by Django
+        Set a depends_on:
+            in the docker compose
+        db:
+            image:postgress:13-alpine
+        Volumes
+            This is how we store persistent data
+            maps directory in container to local machine until we clear it if we want to
+            THIS NEEDS IT'S OWN BLOCK in docker-compose
+                dev-db-data: is populated automatically
+            the data inside db  dev-db-data:/var etc.
+            is in the documentation
+        You need to configure Django
+            telling it how to connect
+        Install DB adaptor dependencies
+            install the tools django uses to connect
+            required inside our docker conteiner
+        Update Python requirements
+            with the Postgres adapter
+        Django needs to know...
+            Engine(type of db) - > Postgres
+            Hostname(IP or domain name for database)
+            Port(default port for postgres == 5432)
+            DB Name (it can have multiple DB's inside)
+            Username
+            Password
+            all this we do in the DABASES inside settings.py, we're gonna be pulling this info from environment variables
+            Environment variables
+                Pull config values from environment variables
+                Easily passed to Docker
+                Used in local, dev or prod
+                Single place to configure project
+                Easy to do with python
+                ej. os.environ.get('DB_HOST')
+        Psycopg2
+            the package that we need in order for Django to connect to our DB
+            Most popular PostgreSQL adaptor for python
+            Supported by Django oficially
+            psycopg2-binary
+                OK for development
+                not good for prod
+                since it's optimized for the OS that is running on.
+            psycopg2
+                Compiles from source (code)
+                you need certain dependencies for it to work, we're using this one.
+        Installing Psycopg2
+            List of package dependencies in docs
+                C compiler
+                python3-dev
+                libpq-dev
+            Equivalent package for Alpine
+                postgresql-client
+                build-base
+                postgresql-dev
+                musl-dev
+            Found by searching and trial and error FML
+            Docker best practice
+                Clean up build dependencies
+                That means we're gonna customize our docker file so that we clean up the packages after using them to keep up Alpine lightweight.
+            In order to install Psycopg2
+            first you need to update the requirements if needed with
+            psycopg2>=2.8.6,<2.9
+            then>
+            docker-compose down
+            to clear the containers there
+            docker-compose build
+            and now it's installed
+
+        Fixing Database race condition
+            Problem with docker-compose is that it
+                It's using depends_on ensures services starts
+                    but it DOESN'T ensure the application is running
+
+            The race condition comes up when our app starts before our db therefore crashing the app, we need to create a command that specifies django to wait_for_db to be up
+            This is a custom management command
+            Make Django "wait_for_db"
+                Check for db availability
+                Continue when db ready
+            Create a custom Django management command
+                Docker-compose makes sure the db starts first and then make the app wait for the db to be ready instead of straigth up crashing
+            When is this an issue?
+                When we're running docker-compose locally
+                Running on deployed environment
+
+            Time to create the core app if it's not there:
+            docker-compose run --rm app sh -c "python manage.py startapp core"
+            delete:
+                tests
+                views
+            create:
+                tests directory with __init__.py
+                add it in installed_apps
+                management directory with __init__.py
+                    commands directory with __init__.py
+                        and here we create wait_for_db.py
+                        there are docs for creating commands
+
+    Django ORM
+        Object relational mapper (ORM)
+        Abstraction layer of data
+            Django handles database structure and changes the db for you
+
+
     urls:
         base > 127.0.0.1:8000

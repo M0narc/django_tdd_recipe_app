@@ -5,13 +5,17 @@ Test custom Django management commands.
 from unittest.mock import patch
 # one posible error we might get
 from psycopg2 import OperationalError as Psycopg2Error
-# helper function to actually call a command that we're testing
+# helper function to actually call a command that we're testing by name
 from django.core.management import call_command
 from django.db.utils import OperationalError
 # base test class, we are testing "when DB is not available"
 from django.test import SimpleTestCase
 
-
+# the patch decorator is being used on top of the class
+# because we're going to be using it on all tests
+# the path let us use the check provided by the BaseCommand
+# because we're using the patch there we're gonna need
+# to add a new parameter to our test cases in order to catch it
 @patch('core.management.commands.wait_for_db.Command.check')
 class CommandTests(SimpleTestCase):
     """Test Commands."""
