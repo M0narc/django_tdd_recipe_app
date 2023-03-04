@@ -248,6 +248,46 @@ Stuff:
         Abstraction layer of data
             Django handles database structure and changes the db for you
 
+    Api Documentation:
+        What to document?
+            Everything needed to use the API
+            Available endpoints (paths)
+                /api/recipes
+            Supported methods
+             GET, POST, PUT, PATCH, DELETE
+            Format of payloads(inputs)
+                Parameters
+                Post JSON format
+            Format of responses(outputs)
+                Response Json format
+            Authentication process
+
+        Option for docs
+            Manual
+                Word doc
+                Markdown
+            Automated
+                Use metadata from code (comments)
+                Generate documentation pages
+
+        Docs in drf
+            Auto generate docs(with third party library)
+                drf-spectacular
+            Generates schema
+            Brosable web interface
+                Make test requests
+                Handle auth
+            How it works!!
+                Generate "schema" file
+                Parse schema into GUI
+            OpenAPI Schema
+                Standard for describing APIs
+                Popular in industry
+                Supported by most API docs tools (we're using swagger)
+                Uses popular formats: Yaml/json
+            Using a Schema
+                Download and run in local Swagger instance
+                Serve Swagger with API
 
     urls:
         base > 127.0.0.1:8000

@@ -11,6 +11,7 @@ from django.db.utils import OperationalError
 # base test class, we are testing "when DB is not available"
 from django.test import SimpleTestCase
 
+
 # the patch decorator is being used on top of the class
 # because we're going to be using it on all tests
 # the path let us use the check provided by the BaseCommand
