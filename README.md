@@ -289,5 +289,37 @@ Stuff:
                 Download and run in local Swagger instance
                 Serve Swagger with API
 
+        Option for docs
+            Manual
+                Word doc
+                Markdown
+            Automated
+                Use metadata from code (comments)
+                Generate documentation pages
+
+        Docs in drf
+            Auto generate docs(with third party library)
+                drf-spectacular
+            Generates schema
+            Brosable web interface
+                Make test requests
+                Handle auth
+            How it works!!
+                Generate "schema" file
+                Parse schema into GUI
+            OpenAPI Schema
+                Standard for describing APIs
+                Popular in industry
+                Supported by most API docs tools (we're using swagger)
+                Uses popular formats: Yaml/json
+            Using a Schema
+                Download and run in local Swagger instance
+                Serve Swagger with API
+        Add it to settings.py
+        Resources
+            https://drf-spectacular.readthedocs.io/en/latest/readme.html#installation
+
+    Requirements.txt something new
+        Run a > docker-compose build
     urls:
         base > 127.0.0.1:8000
