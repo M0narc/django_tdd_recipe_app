@@ -31,6 +31,8 @@ GitHub Actions
 
 
 Apps
+    * in order to create apps the right way to do it is
+      docker-compose run --rm app sh -c "python manage.py startapp appName"
     * app/ - Django project
     * app/core/ - Code shared between multiple apps
     * app/user/ - User related code (user registration or AuthTokens)
@@ -105,6 +107,8 @@ Stuff:
     django and compose:
         docker-compose run --rm app sh -c "flake8"
         docker-compose run --rm app sh -c "python manage.py test"
+        docker-compose run --rm app sh -c "python manage.py startapp appName"
+        docker-compose run --rm app sh -c "python manage.py createsuperuser"
         docker-compose run --rm app sh -c "django-admin startproject app ."
         the little "." at the end is telling it to create the files
         inside our alredy created "app" folder, otherwise it will create anotherone and we'll have conflicts.
@@ -133,6 +137,11 @@ Stuff:
         Check output
         To Run:
             docker-compose run --rm app sh -c "python manage.py test"
+        Public tests:
+            Unauthenticated requests(Registering a new user for example)
+        Private tests:
+            Authenticated requests(Update an existing user)
+        
     Mocking:
         Override or change behaviour of dependencies
         Avoid unintended side effects
@@ -140,7 +149,6 @@ Stuff:
         REWATCH FROM MOCKING PART
     Testing APIs:
         REWATCH TESTING WEB APPS
-
 
     DATABASE:
         PostgreSQL
@@ -319,7 +327,24 @@ Stuff:
         Resources
             https://drf-spectacular.readthedocs.io/en/latest/readme.html#installation
 
+    User API
+        User registration
+        Creating auth token (login system)
+        Viewing/updating profile
+
+        # admin for this will be in the core app, just like the migrations
+
+        Endpoints
+            user/create/
+                post - Register a new user
+            user/token/
+                post - Create new token
+            user/me/
+                put/patch - Update profile
+                get - View profile
+
     Requirements.txt something new
         Run a > docker-compose build
     urls:
-        base > 127.0.0.1:8000
+        base > 127.0.0.1:8000/admin
+        swagger > api/docs/
