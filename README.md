@@ -31,6 +31,8 @@ GitHub Actions
 
 
 Apps
+    * in order to create apps the right way to do it is
+      docker-compose run --rm app sh -c "python manage.py startapp appName"
     * app/ - Django project
     * app/core/ - Code shared between multiple apps
     * app/user/ - User related code (user registration or AuthTokens)
@@ -105,6 +107,8 @@ Stuff:
     django and compose:
         docker-compose run --rm app sh -c "flake8"
         docker-compose run --rm app sh -c "python manage.py test"
+        docker-compose run --rm app sh -c "python manage.py startapp appName"
+        docker-compose run --rm app sh -c "python manage.py createsuperuser"
         docker-compose run --rm app sh -c "django-admin startproject app ."
         the little "." at the end is telling it to create the files
         inside our alredy created "app" folder, otherwise it will create anotherone and we'll have conflicts.
@@ -133,6 +137,11 @@ Stuff:
         Check output
         To Run:
             docker-compose run --rm app sh -c "python manage.py test"
+        Public tests:
+            Unauthenticated requests(Registering a new user for example)
+        Private tests:
+            Authenticated requests(Update an existing user)
+        
     Mocking:
         Override or change behaviour of dependencies
         Avoid unintended side effects
@@ -140,7 +149,6 @@ Stuff:
         REWATCH FROM MOCKING PART
     Testing APIs:
         REWATCH TESTING WEB APPS
-
 
     DATABASE:
         PostgreSQL
@@ -319,7 +327,56 @@ Stuff:
         Resources
             https://drf-spectacular.readthedocs.io/en/latest/readme.html#installation
 
+    User API
+        User registration
+        Creating auth token (login system)
+        Viewing/updating profile
+
+        # admin for this will be in the core app, just like the migrations
+
+        Endpoints
+            user/create/
+                post - Register a new user
+            user/token/
+                post - Create new token
+            user/me/
+                put/patch - Update profile
+                get - View profile
+        Serializers with some special **kwargs
+
+        Authentication
+            Type of Auth
+                Basic
+                    Send username and password with each request (http basic)
+                    for every request you make.
+                Token
+                    Use a token in the http header, you generate a token from the users email
+                    and password, including that token for every request.
+                Json Web Token(JWT)
+                    Same as above but different (?), Use an access and refresh token, this is an advance type of auth, requires external libraries to get it runnin'
+                Session
+                    Use cookies, it's the common way to auth websites, django uses it, to my knowledge
+                
+                This app uses Token auth, since it has some kind of balance of simplicity and security, not the most secure, but it's good enough, it's supported by DRF so we don't have to install anything else, and it's supported by most clients
+
+                How it works?
+                    start by creating a token providing an endpoint that accepts -> post username/password and then that creates a token in our DB returning it to our client, saving it for later use(most likely in the local storage, session storage, cookies), and then every request that the client makes to the api's that needs to be authenticated will include this token in the http headers of the requests.
+                    Pros
+                        Supported out of the box
+                        Simple to use
+                        Supported by most
+                        Avoid sending username/password each time
+                    Cons
+                        Token needs to be secured
+                        Requires DB requests, almost never a problem... unless you are working for a million dollar company, you might want to use JWT
+                
+                    Loggin out
+                        Happens on the client side
+                        Delete token
+
+
     Requirements.txt something new
         Run a > docker-compose build
     urls:
-        base > 127.0.0.1:8000
+        base > 127.0.0.1:8000/admin
+        swagger > api/docs/
