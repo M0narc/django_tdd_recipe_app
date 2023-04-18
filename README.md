@@ -342,6 +342,38 @@ Stuff:
             user/me/
                 put/patch - Update profile
                 get - View profile
+        Serializers with some special **kwargs
+
+        Authentication
+            Type of Auth
+                Basic
+                    Send username and password with each request (http basic)
+                    for every request you make.
+                Token
+                    Use a token in the http header, you generate a token from the users email
+                    and password, including that token for every request.
+                Json Web Token(JWT)
+                    Same as above but different (?), Use an access and refresh token, this is an advance type of auth, requires external libraries to get it runnin'
+                Session
+                    Use cookies, it's the common way to auth websites, django uses it, to my knowledge
+                
+                This app uses Token auth, since it has some kind of balance of simplicity and security, not the most secure, but it's good enough, it's supported by DRF so we don't have to install anything else, and it's supported by most clients
+
+                How it works?
+                    start by creating a token providing an endpoint that accepts -> post username/password and then that creates a token in our DB returning it to our client, saving it for later use(most likely in the local storage, session storage, cookies), and then every request that the client makes to the api's that needs to be authenticated will include this token in the http headers of the requests.
+                    Pros
+                        Supported out of the box
+                        Simple to use
+                        Supported by most
+                        Avoid sending username/password each time
+                    Cons
+                        Token needs to be secured
+                        Requires DB requests, almost never a problem... unless you are working for a million dollar company, you might want to use JWT
+                
+                    Loggin out
+                        Happens on the client side
+                        Delete token
+
 
     Requirements.txt something new
         Run a > docker-compose build
